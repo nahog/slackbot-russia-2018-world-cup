@@ -5,7 +5,7 @@ const winston = require("winston");
 const fs = require("fs");
 
 const logger = winston.createLogger({
-    level: process.env.LOG_LEVEL || "debug",
+    level: process.env.LOG_LEVEL || "info",
     format: winston.format.cli(),
     transports: [
         new winston.transports.File({
@@ -20,7 +20,7 @@ logger.info("proccess started");
 const language = process.env.LANGUAGE || "en"; // The "es" language is already implemented, for others you need to create a new file in the locales folder
 const locale = require("./locales/" + language + ".json");
 const t = translations(locale);
-const cronSchedule = process.env.CRON_SCHEDULE || "*/10 * * * * *";
+const cronSchedule = process.env.CRON_SCHEDULE || "*/15 * * * *";
 const slackEnabled = process.env.SLACK_ENABLED || false;
 const slackChannel = process.env.SLACK_CHANNEL || "#worldcup";
 const slackBot = process.env.SLACK_BOT || "Worldcup";

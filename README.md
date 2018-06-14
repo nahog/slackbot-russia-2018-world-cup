@@ -27,9 +27,9 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 All configurations can be modified by environmental variables, here are the different configurations available:
 
 ### General
-- LOG_LEVEL - type: string, default `"debug"`, The log level to the console (error, info, debug, silly, etc...)
+- LOG_LEVEL - type: string, default `"info"`, The log level to the console (error, info, debug, silly, etc...)
 - LANGUAGE - type: string, default: `"en"`, Language for the translations, the "es" language is already included, any new language should be added as a new file in the locales folder following the convention of the other files already there.
-- CRON_SCHEDULE, type: string (cron expression), default: `"*/10 * * * *"`, The cron expression to schedule each Api check, see https://es.wikipedia.org/wiki/Cron_(Unix)
+- CRON_SCHEDULE, type: string (cron expression), default: `"*/15 * * * *"`, The cron expression to schedule each Api check, see https://es.wikipedia.org/wiki/Cron_(Unix)
 - SLACK_ENABLED, type: boolean, default: `true`, Enable or disable the post to slack, good for testing the configuration.
 - SLACK_CHANNEL, type: string, default: `"#worldcup"`, The name of the slack channel that the bot will post to.
 - SLACK_BOT, type: string, default: `"Worldcup"`, The name of the bot (configured in slack) that will make the post.
