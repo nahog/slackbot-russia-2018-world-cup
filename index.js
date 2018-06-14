@@ -26,13 +26,14 @@ const slackChannel = process.env.SLACK_CHANNEL || "#worldcup";
 const slackBot = process.env.SLACK_BOT || "Worldcup";
 const slackWebhook = process.env.SLACK_WEBHOOK || "https://hooks.slack.com/services/***";
 const slack = new Slack();
+const actionModule = process.argv[2];
 
 logger.debug(
-    "the current cron schedule for calling the action is: " + cronSchedule
+    "the current cron schedule for calling the " + actionModule + " action is: " + cronSchedule
 );
 
 slack.setWebhook(slackWebhook);
-var action = require("./actions/" + process.argv[2]);
+var action = require("./actions/" + actionModule);
 let job = schedule.scheduleJob(cronSchedule, runJob);
 
 function runJob() {
