@@ -9,7 +9,7 @@ const _ = require("lodash");
 const fs = require("fs");
 
 const logger = winston.createLogger({
-    level: process.env.LOG_LEVEL || "debug",
+    level: process.env.LOG_LEVEL || "info",
     format: winston.format.cli(),
     transports: [
         new winston.transports.File({
@@ -21,13 +21,13 @@ const logger = winston.createLogger({
 });
 logger.info("proccess started");
 
-const language = process.env.LANGUAGE || "es";
+const language = process.env.LANGUAGE || "es"; // The "en" language is already implemented, for others you need to create a new file in the locales folder
 const locale = require("./locales/" + language + ".json");
 const t = translations(locale);
-const highlightedTeam = process.env.HIGHLIGHTED_TEAM || "Argentina";
+const highlightedTeam = process.env.HIGHLIGHTED_TEAM || "Argentina"; // It should match the team name that comes from the Api
 const showZonesJson = process.env.SHOW_ZONES_JSON || '{ "ART": "-3", "IST": "+1" }';
 const showZones = JSON.parse(showZonesJson);
-const cronSchedule = process.env.CRON_SCHEDULE || "*/15 * * * * *";
+const cronSchedule = process.env.CRON_SCHEDULE || "*/10 * * * *";
 const slackEnabled = process.env.SLACK_ENABLED || true;
 const slackChannel = process.env.SLACK_CHANNEL || "#worldcup";
 const slackBot = process.env.SLACK_BOT || "Worldcup";
