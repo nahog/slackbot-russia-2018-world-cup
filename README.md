@@ -64,8 +64,8 @@ Current www.coperos.com :soccer: rooster:
 ```
 
 ## Screenshots
-- [[https://github.com/nahog/slackbot-russia-2018-world-cup/blob/master/servers.png|alt=servers]]
-- [[https://github.com/nahog/slackbot-russia-2018-world-cup/blob/master/slack.png|alt=slack]]
+- ![](servers.jpg?raw=true)
+- ![](slack.jpg?raw=true)
 
 ## For developers
 To add a new module you can base your code in one of the football-data or coperos module, but the gist is this:
