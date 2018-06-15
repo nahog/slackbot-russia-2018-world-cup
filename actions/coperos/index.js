@@ -1,8 +1,8 @@
+const config = require("./config.json");
 const request = require('request');
 const cheerio = require('cheerio');
-const _ = require("lodash");
 
-const tournament = process.env.COPEROS_TOURNAMENT || "rusia_2018_1.html";
+const tournament = process.env.COPEROS_TOURNAMENT || config.coperosTournament || "rusia_2018_1.html";
 const scrapUrl = "https://www.coperos.com/torneos/" + tournament;
 
 module.exports = function(logger, t, postToSlack) {

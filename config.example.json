@@ -1,0 +1,9 @@
+{
+    "logLevel": "info",
+    "language": "en",
+    "cronSchedule": "*/15 * * * *",
+    "slackEnabled": false,
+    "slackChannel": "#worldcup",
+    "slackBot": "Worldcup",
+    "slackWebhook": "https://hooks.slack.com/services/***"
+}

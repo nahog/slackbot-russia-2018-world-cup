@@ -2,6 +2,7 @@
     {
         "id": "2018-06-14T15:00:00Z_Russia_Saudi Arabia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-14T15:00:00Z",
         "homeTeamName": "Russia",
         "awayTeamName": "Saudi Arabia",
@@ -11,6 +12,7 @@
     {
         "id": "2018-06-15T12:00:00Z_Egypt_Uruguay",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-15T12:00:00Z",
         "homeTeamName": "Egypt",
         "awayTeamName": "Uruguay",
@@ -20,6 +22,7 @@
     {
         "id": "2018-06-15T15:00:00Z_Morocco_Iran",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-15T15:00:00Z",
         "homeTeamName": "Morocco",
         "awayTeamName": "Iran",
@@ -29,6 +32,7 @@
     {
         "id": "2018-06-15T18:00:00Z_Portugal_Spain",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-15T18:00:00Z",
         "homeTeamName": "Portugal",
         "awayTeamName": "Spain",
@@ -38,6 +42,7 @@
     {
         "id": "2018-06-16T10:00:00Z_France_Australia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-16T10:00:00Z",
         "homeTeamName": "France",
         "awayTeamName": "Australia",
@@ -47,6 +52,7 @@
     {
         "id": "2018-06-16T13:00:00Z_Argentina_Iceland",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-16T13:00:00Z",
         "homeTeamName": "Argentina",
         "awayTeamName": "Iceland",
@@ -56,6 +62,7 @@
     {
         "id": "2018-06-16T16:00:00Z_Peru_Denmark",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-16T16:00:00Z",
         "homeTeamName": "Peru",
         "awayTeamName": "Denmark",
@@ -65,6 +72,7 @@
     {
         "id": "2018-06-16T19:00:00Z_Croatia_Nigeria",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-16T19:00:00Z",
         "homeTeamName": "Croatia",
         "awayTeamName": "Nigeria",
@@ -74,6 +82,7 @@
     {
         "id": "2018-06-17T12:00:00Z_Costa Rica_Serbia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-17T12:00:00Z",
         "homeTeamName": "Costa Rica",
         "awayTeamName": "Serbia",
@@ -83,6 +92,7 @@
     {
         "id": "2018-06-17T15:00:00Z_Germany_Mexico",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-17T15:00:00Z",
         "homeTeamName": "Germany",
         "awayTeamName": "Mexico",
@@ -92,6 +102,7 @@
     {
         "id": "2018-06-17T18:00:00Z_Brazil_Switzerland",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-17T18:00:00Z",
         "homeTeamName": "Brazil",
         "awayTeamName": "Switzerland",
@@ -101,6 +112,7 @@
     {
         "id": "2018-06-18T12:00:00Z_Sweden_Korea Republic",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-18T12:00:00Z",
         "homeTeamName": "Sweden",
         "awayTeamName": "Korea Republic",
@@ -110,6 +122,7 @@
     {
         "id": "2018-06-18T15:00:00Z_Belgium_Panama",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-18T15:00:00Z",
         "homeTeamName": "Belgium",
         "awayTeamName": "Panama",
@@ -119,6 +132,7 @@
     {
         "id": "2018-06-18T18:00:00Z_Tunisia_England",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-18T18:00:00Z",
         "homeTeamName": "Tunisia",
         "awayTeamName": "England",
@@ -128,6 +142,7 @@
     {
         "id": "2018-06-19T12:00:00Z_Colombia_Japan",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-19T12:00:00Z",
         "homeTeamName": "Colombia",
         "awayTeamName": "Japan",
@@ -137,6 +152,7 @@
     {
         "id": "2018-06-19T15:00:00Z_Poland_Senegal",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-19T15:00:00Z",
         "homeTeamName": "Poland",
         "awayTeamName": "Senegal",
@@ -146,6 +162,7 @@
     {
         "id": "2018-06-19T18:00:00Z_Russia_Egypt",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-19T18:00:00Z",
         "homeTeamName": "Russia",
         "awayTeamName": "Egypt",
@@ -155,6 +172,7 @@
     {
         "id": "2018-06-20T12:00:00Z_Portugal_Morocco",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-20T12:00:00Z",
         "homeTeamName": "Portugal",
         "awayTeamName": "Morocco",
@@ -164,6 +182,7 @@
     {
         "id": "2018-06-20T15:00:00Z_Uruguay_Saudi Arabia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-20T15:00:00Z",
         "homeTeamName": "Uruguay",
         "awayTeamName": "Saudi Arabia",
@@ -173,6 +192,7 @@
     {
         "id": "2018-06-20T18:00:00Z_Iran_Spain",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-20T18:00:00Z",
         "homeTeamName": "Iran",
         "awayTeamName": "Spain",
@@ -182,6 +202,7 @@
     {
         "id": "2018-06-21T12:00:00Z_Denmark_Australia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-21T12:00:00Z",
         "homeTeamName": "Denmark",
         "awayTeamName": "Australia",
@@ -191,6 +212,7 @@
     {
         "id": "2018-06-21T15:00:00Z_France_Peru",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-21T15:00:00Z",
         "homeTeamName": "France",
         "awayTeamName": "Peru",
@@ -200,6 +222,7 @@
     {
         "id": "2018-06-21T18:00:00Z_Argentina_Croatia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-21T18:00:00Z",
         "homeTeamName": "Argentina",
         "awayTeamName": "Croatia",
@@ -209,6 +232,7 @@
     {
         "id": "2018-06-22T12:00:00Z_Brazil_Costa Rica",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-22T12:00:00Z",
         "homeTeamName": "Brazil",
         "awayTeamName": "Costa Rica",
@@ -218,6 +242,7 @@
     {
         "id": "2018-06-22T15:00:00Z_Nigeria_Iceland",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-22T15:00:00Z",
         "homeTeamName": "Nigeria",
         "awayTeamName": "Iceland",
@@ -227,6 +252,7 @@
     {
         "id": "2018-06-22T18:00:00Z_Serbia_Switzerland",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-22T18:00:00Z",
         "homeTeamName": "Serbia",
         "awayTeamName": "Switzerland",
@@ -236,6 +262,7 @@
     {
         "id": "2018-06-23T12:00:00Z_Belgium_Tunisia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-23T12:00:00Z",
         "homeTeamName": "Belgium",
         "awayTeamName": "Tunisia",
@@ -245,6 +272,7 @@
     {
         "id": "2018-06-23T15:00:00Z_Korea Republic_Mexico",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-23T15:00:00Z",
         "homeTeamName": "Korea Republic",
         "awayTeamName": "Mexico",
@@ -254,6 +282,7 @@
     {
         "id": "2018-06-23T18:00:00Z_Germany_Sweden",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-23T18:00:00Z",
         "homeTeamName": "Germany",
         "awayTeamName": "Sweden",
@@ -263,6 +292,7 @@
     {
         "id": "2018-06-24T12:00:00Z_England_Panama",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-24T12:00:00Z",
         "homeTeamName": "England",
         "awayTeamName": "Panama",
@@ -272,6 +302,7 @@
     {
         "id": "2018-06-24T15:00:00Z_Japan_Senegal",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-24T15:00:00Z",
         "homeTeamName": "Japan",
         "awayTeamName": "Senegal",
@@ -281,6 +312,7 @@
     {
         "id": "2018-06-24T18:00:00Z_Poland_Colombia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-24T18:00:00Z",
         "homeTeamName": "Poland",
         "awayTeamName": "Colombia",
@@ -290,6 +322,7 @@
     {
         "id": "2018-06-25T14:00:00Z_Saudi Arabia_Egypt",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-25T14:00:00Z",
         "homeTeamName": "Saudi Arabia",
         "awayTeamName": "Egypt",
@@ -299,6 +332,7 @@
     {
         "id": "2018-06-25T14:00:00Z_Uruguay_Russia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-25T14:00:00Z",
         "homeTeamName": "Uruguay",
         "awayTeamName": "Russia",
@@ -308,6 +342,7 @@
     {
         "id": "2018-06-25T18:00:00Z_Iran_Portugal",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-25T18:00:00Z",
         "homeTeamName": "Iran",
         "awayTeamName": "Portugal",
@@ -317,6 +352,7 @@
     {
         "id": "2018-06-25T18:00:00Z_Spain_Morocco",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-25T18:00:00Z",
         "homeTeamName": "Spain",
         "awayTeamName": "Morocco",
@@ -326,6 +362,7 @@
     {
         "id": "2018-06-26T14:00:00Z_Denmark_France",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-26T14:00:00Z",
         "homeTeamName": "Denmark",
         "awayTeamName": "France",
@@ -335,6 +372,7 @@
     {
         "id": "2018-06-26T14:00:00Z_Australia_Peru",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-26T14:00:00Z",
         "homeTeamName": "Australia",
         "awayTeamName": "Peru",
@@ -344,6 +382,7 @@
     {
         "id": "2018-06-26T18:00:00Z_Nigeria_Argentina",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-26T18:00:00Z",
         "homeTeamName": "Nigeria",
         "awayTeamName": "Argentina",
@@ -353,6 +392,7 @@
     {
         "id": "2018-06-26T18:00:00Z_Iceland_Croatia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-26T18:00:00Z",
         "homeTeamName": "Iceland",
         "awayTeamName": "Croatia",
@@ -362,6 +402,7 @@
     {
         "id": "2018-06-27T14:00:00Z_Mexico_Sweden",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-27T14:00:00Z",
         "homeTeamName": "Mexico",
         "awayTeamName": "Sweden",
@@ -371,6 +412,7 @@
     {
         "id": "2018-06-27T14:00:00Z_Korea Republic_Germany",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-27T14:00:00Z",
         "homeTeamName": "Korea Republic",
         "awayTeamName": "Germany",
@@ -380,6 +422,7 @@
     {
         "id": "2018-06-27T18:00:00Z_Serbia_Brazil",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-27T18:00:00Z",
         "homeTeamName": "Serbia",
         "awayTeamName": "Brazil",
@@ -389,6 +432,7 @@
     {
         "id": "2018-06-27T18:00:00Z_Switzerland_Costa Rica",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-27T18:00:00Z",
         "homeTeamName": "Switzerland",
         "awayTeamName": "Costa Rica",
@@ -398,6 +442,7 @@
     {
         "id": "2018-06-28T14:00:00Z_Japan_Poland",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-28T14:00:00Z",
         "homeTeamName": "Japan",
         "awayTeamName": "Poland",
@@ -407,6 +452,7 @@
     {
         "id": "2018-06-28T14:00:00Z_Senegal_Colombia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-28T14:00:00Z",
         "homeTeamName": "Senegal",
         "awayTeamName": "Colombia",
@@ -416,6 +462,7 @@
     {
         "id": "2018-06-28T18:00:00Z_Panama_Tunisia",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-28T18:00:00Z",
         "homeTeamName": "Panama",
         "awayTeamName": "Tunisia",
@@ -425,6 +472,7 @@
     {
         "id": "2018-06-28T18:00:00Z_England_Belgium",
         "posted": false,
+        "status": "TIMED",
         "date": "2018-06-28T18:00:00Z",
         "homeTeamName": "England",
         "awayTeamName": "Belgium",
@@ -434,6 +482,7 @@
     {
         "id": "2018-06-30T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-06-30T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -443,6 +492,7 @@
     {
         "id": "2018-06-30T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-06-30T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -452,6 +502,7 @@
     {
         "id": "2018-07-01T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-01T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -461,6 +512,7 @@
     {
         "id": "2018-07-01T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-01T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -470,6 +522,7 @@
     {
         "id": "2018-07-02T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-02T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -479,6 +532,7 @@
     {
         "id": "2018-07-02T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-02T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -488,6 +542,7 @@
     {
         "id": "2018-07-03T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-03T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -497,6 +552,7 @@
     {
         "id": "2018-07-03T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-03T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -506,6 +562,7 @@
     {
         "id": "2018-07-06T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-06T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -515,6 +572,7 @@
     {
         "id": "2018-07-06T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-06T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -524,6 +582,7 @@
     {
         "id": "2018-07-07T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-07T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -533,6 +592,7 @@
     {
         "id": "2018-07-07T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-07T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -542,6 +602,7 @@
     {
         "id": "2018-07-10T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-10T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -551,6 +612,7 @@
     {
         "id": "2018-07-11T18:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-11T18:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -560,6 +622,7 @@
     {
         "id": "2018-07-14T14:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-14T14:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",
@@ -569,6 +632,7 @@
     {
         "id": "2018-07-15T15:00:00Z",
         "posted": false,
+        "status": "SCHEDULED",
         "date": "2018-07-15T15:00:00Z",
         "homeTeamName": "",
         "awayTeamName": "",

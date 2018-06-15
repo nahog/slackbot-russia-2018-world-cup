@@ -1,11 +1,6 @@
 # Slackbot Russia 2018 World Cup
 
-A bot for slack to message about matches of the 2018 FIFA World Cup
-
-## What you have to do
-- Configure the slack webhook https://api.slack.com/incoming-webhooks
-- Get an api token from https://api.football-data.org/client/register
-- Run the app somewhere (node index.js football-data)
+A bot for slack to message about matches of the 2018 FIFA World Cup and other custom actions
 
 ## Modules (NEW!)
 Now you can develop your own modules to make the bot do other things based on actions. The football-data is now a module, so starting the app must include the module. As an example there is another module now, that parse the web www.coperos.com for a rooster and post the rooster to the channel. To launch the new module the command is (node index.js coperos).
@@ -15,7 +10,16 @@ CRON_SCHEDULE="*/10 * * * *" node index.js football-data
 CRON_SCHEDULE="0 23 * * *" node index.js coperos
 ```
 
+## What you have to do
+- Configure the slack webhook https://api.slack.com/incoming-webhooks
+- Run the app somewhere (node index.js football-data)
+
+### Football-data module extra
+- Get an api token from https://api.football-data.org/client/register
+
 ## What it does for you
+
+### Football-data module
 - Post every day, the matches of the day
 - Updates for new goals on each match
 - Highlight your preferred team
@@ -23,8 +27,12 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 - Supports multiple timezones
 - Uses flag emoticons
 
+### Coperos module
+- Scrapes the www.coperos.com/torneos/your-tourament url
+- Post the current rooster extracted from the site
+
 ## Configs
-All configurations can be modified by environmental variables, here are the different configurations available:
+All configurations can be modified by environmental variables, or using the config.json file. There is one general config, and one in each module, for security reasons the config.json file is ignored in git but an example config file is provided for easy ussage. Here are the different configurations available:
 
 ### General
 - LOG_LEVEL - type: string, default `"info"`, The log level to the console (error, info, debug, silly, etc...)
@@ -69,7 +77,7 @@ Current www.coperos.com :soccer: rooster:
 
 ## For developers
 To add a new module you can base your code in one of the football-data or coperos module, but the gist is this:
-- Create a file inside the actions folder (i.e. my-module.js)
+- Create an index.js file inside the actions/your-module folder (i.e. actions/my-module/index.js)
 - Implement the module export as follows:
 ```javascript
 module.exports = function(logger, t, postToSlack) {
@@ -88,8 +96,12 @@ module.exports = function(logger, t, postToSlack) {
     postToSlack(message);
 }
 ```
-- Run it (this will post "Love this bot :robot_face:" every half hour to slack):
+- If you need configurations you can use constants or config files and require them to keep the same pattern as other modules
+```javascript
+require("./config.json");
+const myConfig = process.env.MY_MODULE_MY_CONFIG || config.myConfig || "default";
 ```
+- Run it (this will post "Love this bot :robot_face:" every half hour to slack):
 SLACK_WEBHOOK="https://hooks.slack.com/services/MYSLACKWE/BHOOKKEYTHA/tIgotFROMslackWebInterface" CRON_SCHEDULE="*/30 * * * *" node index.js my-module
 ```
 

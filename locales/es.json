@@ -1,7 +1,8 @@
 {
     "Current www.coperos.com :soccer: rooster:": "Tabla de posiciones de www.coperos.com :soccer::",
     "Today's match {home} vs {away} at {date}": "Hoy juegan {home} vs {away} a las {date}",
-    "Today's match {home} vs {away} at {date}, current score {home} {homeGoals} - {awayGoals} {away}": "Hoy juegan {home} vs {away} a las {date}, actualmente van {home} {homeGoals} - {awayGoals} {away}",
+    ":goal_net: {home} vs {away} match started!": ":goal_net: Empezo el partido! {home} vs {away}",
+    ":sports_medal: Final results for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}": ":sports_medal: Resultados finales para {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}",
     "New update for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}": "Nueva actualizacion para {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}",
     "Argentina": "Argentina",
     "Australia": "Australia",

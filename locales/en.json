@@ -1,7 +1,8 @@
 {
     "Current www.coperos.com :soccer: rooster:": "Current www.coperos.com :soccer: rooster:",
     "Today's match {home} vs {away} at {date}": "Today's match {home} vs {away} at {date}",
-    "Today's match {home} vs {away} at {date}, current score {home} {homeGoals} - {awayGoals} {away}": "Today's match {home} vs {away} at {date}, current score {home} {homeGoals} - {awayGoals} {away}",
+    ":goal_net: {home} vs {away} match started!": ":goal_net: {home} vs {away} match started!",
+    ":sports_medal: Final results for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}": ":sports_medal: Final results for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}",
     "New update for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}": "New update for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}",
     "Argentina": "Argentina",
     "Australia": "Australia",

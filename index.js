@@ -1,11 +1,12 @@
 const translations = require("translations");
 const schedule = require("node-schedule");
+const config = require("./config.json");
 const Slack = require("slack-node");
 const winston = require("winston");
 const fs = require("fs");
 
 const logger = winston.createLogger({
-    level: process.env.LOG_LEVEL || "info",
+    level: process.env.LOG_LEVEL || config.logLevel || "info",
     format: winston.format.cli(),
     transports: [
         new winston.transports.File({
@@ -17,14 +18,14 @@ const logger = winston.createLogger({
 });
 logger.info("proccess started");
 
-const language = process.env.LANGUAGE || "en"; // The "es" language is already implemented, for others you need to create a new file in the locales folder
+const language = process.env.LANGUAGE || config.language || "en"; // The "es" language is already implemented, for others you need to create a new file in the locales folder
 const locale = require("./locales/" + language + ".json");
 const t = translations(locale);
-const cronSchedule = process.env.CRON_SCHEDULE || "*/15 * * * *";
-const slackEnabled = process.env.SLACK_ENABLED || true;
-const slackChannel = process.env.SLACK_CHANNEL || "#worldcup";
-const slackBot = process.env.SLACK_BOT || "Worldcup";
-const slackWebhook = process.env.SLACK_WEBHOOK || "https://hooks.slack.com/services/***";
+const cronSchedule = process.env.CRON_SCHEDULE || config.cronSchedule || "*/15 * * * *";
+const slackEnabled = process.env.SLACK_ENABLED || config.slackEnabled || true;
+const slackChannel = process.env.SLACK_CHANNEL || config.slackChannel || "#worldcup";
+const slackBot = process.env.SLACK_BOT || config.slackBot || "Worldcup";
+const slackWebhook = process.env.SLACK_WEBHOOK || config.slackWebhook || "https://hooks.slack.com/services/***";
 const slack = new Slack();
 const actionModule = process.argv[2];
 
@@ -33,8 +34,9 @@ logger.debug(
 );
 
 slack.setWebhook(slackWebhook);
-var action = require("./actions/" + actionModule);
+var action = require("./actions/" + actionModule + "/index.js");
 let job = schedule.scheduleJob(cronSchedule, runJob);
+logger.info("first event will fire at: " + job.nextInvocation());
 
 function runJob() {
     logger.info("schedule fired on: " + new Date());
