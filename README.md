@@ -44,7 +44,44 @@ All configurations can be modified by environmental variables, here are the diff
 - COPEROS_TOURNAMENT, type string, default: `"rusia_2018_1.html"`, The url of the www.coperos.com tournament to get the rooster.
 
 ## Sample post
-`Nueva actualizacion para Rusia :flag-ru: vs :flag-sa: Arabia Saudita, Rusia :flag-ru: 5 - 0 :flag-sa: Arabia Saudita`
+
+### Football-data module
+```
+Today's match Egypt :flag-eg: vs :flag-uy: Uruguay at 9:00 AM ART, 1:00 PM IST
+```
+
+### Coperos module
+```
+Current www.coperos.com :soccer: rooster:
+1. :first_place_medal: user1 (3 pts.)
+2. :second_place_medal: user2 (3 pts.)
+3. :third_place_medal: user3 (3 pts.)
+4. user4 (3 pts.)
+5. user5 (3 pts.)
+6. user6 (3 pts.)
+7. user7 (0 pts.)
+8. :sob: user8 (0 pts.)
+```
+
+## Screenshots
+- [[https://github.com/nahog/slackbot-russia-2018-world-cup/blob/master/servers.png|alt=servers]]
+- [[https://github.com/nahog/slackbot-russia-2018-world-cup/blob/master/slack.png|alt=slack]]
+
+## For developers
+To add a new module you can base your code in one of the football-data or coperos module, but the gist is this:
+- Create a file inside the actions folder (i.e. my-module.js)
+- Implement the module export as follows:
+```javascript
+module.exports = function(logger, t, postToSlack) {
+    // Do your stuff here, this function will be called by the cron based on the cron expression config.
+    // logger lets you log commands to the cli using winston (i.e. logger.info("..."), logger.error("...")).
+    logger.info("executing my custom module");
+    // t() lets you use the translations in the locale folder (you will need to add your strings there if you want to support localization in your module). See the node-translations pkg.
+    let message = t("Love this {lovableItem} :robot_face:", {lovableItem: "bot"});
+    // postToSlack(message) will post whaever message you pass to the configured slack channel, it support all the emojis and rich text supported by slack.
+    postToSlack(message);
+}
+```
 
 ## Todos
 - A lot, it was some quick and dirty code made the morning before the world cup start, enjoy the **World Cup**
