@@ -73,14 +73,24 @@ To add a new module you can base your code in one of the football-data or copero
 - Implement the module export as follows:
 ```javascript
 module.exports = function(logger, t, postToSlack) {
-    // Do your stuff here, this function will be called by the cron based on the cron expression config.
-    // logger lets you log commands to the cli using winston (i.e. logger.info("..."), logger.error("...")).
+    // Do your stuff here, this function will be called by the cron based on the
+    // cron expression config.
+    // logger lets you log commands to the cli using winston (i.e. logger.info("..."),
+    // logger.error("...")).
     logger.info("executing my custom module");
-    // t() lets you use the translations in the locale folder (you will need to add your strings there if you want to support localization in your module). See the node-translations pkg.
+    // t() lets you use the translations in the locale folder (you will need to add your
+    // strings there if you want to support localization in your module). See the
+    // node-translations pkg, or you can simple does not use t() and have a single
+    // language in your module
     let message = t("Love this {lovableItem} :robot_face:", {lovableItem: "bot"});
-    // postToSlack(message) will post whaever message you pass to the configured slack channel, it support all the emojis and rich text supported by slack.
+    // postToSlack(message) will post whaever message you pass to the configured slack
+    // channel, it support all the emojis and rich text supported by slack.
     postToSlack(message);
 }
+```
+- Run it (this will post "Love this bot :robot_face:" every half hour to slack):
+```
+SLACK_WEBHOOK="https://hooks.slack.com/services/MYSLACKWE/BHOOKKEYTHA/tIgotFROMslackWebInterface" CRON_SCHEDULE="*/30 * * * *" node index.js my-module
 ```
 
 ## Todos
