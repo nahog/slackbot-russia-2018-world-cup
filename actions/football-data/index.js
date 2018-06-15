@@ -1,14 +1,15 @@
 const flagsEmoji = require("./flags.json")
 const schedule = require("node-schedule");
+const config = require("./config.json");
 const moment = require("moment");
 const http = require("http");
 const _ = require("lodash");
 const fs = require("fs");
 
-const highlightedTeam = process.env.HIGHLIGHTED_TEAM || "Argentina"; // It should match the team name that comes from the Api
-const showZonesJson = process.env.SHOW_ZONES_JSON || '{ "ART": "-3", "IST": "+1" }';
+const highlightedTeam = process.env.HIGHLIGHTED_TEAM || config.highlightedTeam || "Argentina"; // It should match the team name that comes from the Api
+const showZonesJson = process.env.SHOW_ZONES_JSON || config.showZonesJson || '{ "ART": "-3", "IST": "+1" }';
 const showZones = JSON.parse(showZonesJson);
-const footballDataApiToken = process.env.FOOTBALL_DATA_API_TOKEN || "***";
+const footballDataApiToken = process.env.FOOTBALL_DATA_API_TOKEN || config.footballDataApiToken || "***";
 const dbFile = "db.json";
 const dbCleanFile = "db.clean.json";
 const dataApiOptions = {
@@ -87,29 +88,41 @@ function processFixture(logger, t, postToSlack, today, apiFixture, dbFixture) {
                     away: flagsEmoji[apiFixture.awayTeamName] + " " + awayTeamDecoration + t(apiFixture.awayTeamName) + awayTeamDecoration,
                     date: matchHour
                 }));
-            } else {
-                postToSlack(t("Today's match {home} vs {away} at {date}, current score {home} {homeGoals} - {awayGoals} {away}", {
-                    home: homeTeamDecoration + t(apiFixture.homeTeamName) + homeTeamDecoration + " " + flagsEmoji[apiFixture.homeTeamName],
-                    away: flagsEmoji[apiFixture.awayTeamName] + " " + awayTeamDecoration + t(apiFixture.awayTeamName) + awayTeamDecoration,
-                    homeGoals: apiFixture.goalsHomeTeam,
-                    awayGoals: apiFixture.goalsAwayTeam,
-                    date: matchHour
-                }));
             }
         } else {
-            if (
-                apiFixture.goalsHomeTeam !== dbFixture.goalsHomeTeam ||
-                apiFixture.goalsAwayTeam !== dbFixture.goalsAwayTeam
-            ) {
-                postToSlack(t("New update for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}", {
-                    home: homeTeamDecoration + t(apiFixture.homeTeamName) + homeTeamDecoration + " " + flagsEmoji[apiFixture.homeTeamName],
-                    away: flagsEmoji[apiFixture.awayTeamName] + " " + awayTeamDecoration + t(apiFixture.awayTeamName) + awayTeamDecoration,
-                    homeGoals: apiFixture.goalsHomeTeam,
-                    awayGoals: apiFixture.goalsAwayTeam
-                }));
+            if (apiFixture.status !== dbFixture.status) {
+                switch(apiFixture.status) {
+                    case "IN_PLAY":
+                        postToSlack(t(":goal_net: {home} vs {away} match started!", {
+                            home: homeTeamDecoration + t(apiFixture.homeTeamName) + homeTeamDecoration + " " + flagsEmoji[apiFixture.homeTeamName],
+                            away: flagsEmoji[apiFixture.awayTeamName] + " " + awayTeamDecoration + t(apiFixture.awayTeamName) + awayTeamDecoration
+                        }));
+                        break;
+                    case "FINISHED":
+                        postToSlack(t(":sports_medal: Final results for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}", {
+                            home: homeTeamDecoration + t(apiFixture.homeTeamName) + homeTeamDecoration + " " + flagsEmoji[apiFixture.homeTeamName],
+                            away: flagsEmoji[apiFixture.awayTeamName] + " " + awayTeamDecoration + t(apiFixture.awayTeamName) + awayTeamDecoration,
+                            homeGoals: apiFixture.goalsHomeTeam,
+                            awayGoals: apiFixture.goalsAwayTeam
+                        }));
+                        break;
+                }
+            } else {
+                if (
+                    apiFixture.goalsHomeTeam !== dbFixture.goalsHomeTeam ||
+                    apiFixture.goalsAwayTeam !== dbFixture.goalsAwayTeam
+                ) {
+                    postToSlack(t("New update for {home} vs {away}, {home} {homeGoals} - {awayGoals} {away}", {
+                        home: homeTeamDecoration + t(apiFixture.homeTeamName) + homeTeamDecoration + " " + flagsEmoji[apiFixture.homeTeamName],
+                        away: flagsEmoji[apiFixture.awayTeamName] + " " + awayTeamDecoration + t(apiFixture.awayTeamName) + awayTeamDecoration,
+                        homeGoals: apiFixture.goalsHomeTeam,
+                        awayGoals: apiFixture.goalsAwayTeam
+                    }));
+                }
             }
         }
 
+        dbFixture.status = apiFixture.status;
         dbFixture.goalsHomeTeam = apiFixture.goalsHomeTeam;
         dbFixture.goalsAwayTeam = apiFixture.goalsAwayTeam;
         dbFixture.posted = true;
@@ -137,6 +150,7 @@ function parseApiData(logger, body) {
         apiData.push({
             id: getId(fixture),
             posted: false,
+            status: fixture.status,
             date: fixture.date,
             homeTeamName: fixture.homeTeamName,
             awayTeamName: fixture.awayTeamName,
