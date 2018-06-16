@@ -102,6 +102,7 @@ require("./config.json");
 const myConfig = process.env.MY_MODULE_MY_CONFIG || config.myConfig || "default";
 ```
 - Run it (this will post "Love this bot :robot_face:" every half hour to slack):
+```
 SLACK_WEBHOOK="https://hooks.slack.com/services/MYSLACKWE/BHOOKKEYTHA/tIgotFROMslackWebInterface" CRON_SCHEDULE="*/30 * * * *" node index.js my-module
 ```
 
