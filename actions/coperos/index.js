@@ -1,7 +1,11 @@
 const config = require("./config.json");
 const request = require('request');
 const cheerio = require('cheerio');
+const _ = require('lodash');
+const fs = require('fs');
 
+const databaseFile = "coperos.json";
+const databaseCleanFile = "coperos.clean.json";
 const tournament = process.env.COPEROS_TOURNAMENT || config.coperosTournament || "rusia_2018_1.html";
 const scrapUrl = "https://www.coperos.com/torneos/" + tournament;
 
@@ -11,12 +15,56 @@ module.exports = function(logger, t, postToSlack) {
             let $ = cheerio.load(html);
             let result = getJsonFromHtml($);
             
-            processCoperosResult(t, postToSlack, result);
+            if (processDatabase(logger, result)) {
+                logger.info("new changes in rooster, posting...");                
+                styleAndPostToSlack(logger, t, postToSlack, result);
+            }
+            else {
+                logger.info("no changes in rooster");
+            }
         }
     });
 }
 
-function processCoperosResult(t, postToSlack, result) {
+function processDatabase(logger, newData) {
+    logger.debug("raw data: " + JSON.stringify(newData));
+    newData = _.orderBy(newData, ['score','user'], ['desc', 'asc']);
+    for (let index = 0; index < newData.length; index++) {
+        newData[index].position = index + 1;
+    }
+    logger.debug("ordered data:" + JSON.stringify(newData));
+ 
+    if (!fs.existsSync(databaseFile)) {
+        fs.copyFileSync(databaseCleanFile, databaseFile);
+    }
+
+    const databaseFileContent = fs.readFileSync(databaseFile);
+    logger.debug("database data: " + databaseFileContent);
+    const database = JSON.parse(databaseFileContent);
+
+    let changed = false;
+    _.forEach(newData, item => {
+        let itemDb = _.findLast(database, d => d.user === item.user);
+        if (itemDb) {
+            item.diff = item.score - itemDb.score;
+            item.positionChange = itemDb.position - item.position;
+            if (item.diff !== 0 || item.positionChange !== 0) {
+                changed = true;
+            }
+        }
+        else {
+            changed = true;
+            item.diff = 0;
+            item.positionChange = 0;
+        }
+    });
+
+    logger.debug("new database data: " + JSON.stringify(newData));
+    fs.writeFileSync(databaseFile, JSON.stringify(newData));
+    return changed;
+}
+
+function styleAndPostToSlack(logger, t, postToSlack, result) {
     let coperosRooster = t("Current www.coperos.com :soccer: rooster:") + "\n";
     for (let index = 0; index < result.length; index++) {
         const item = result[index];
@@ -35,8 +83,18 @@ function processCoperosResult(t, postToSlack, result) {
                 icon = ":sob: ";
                 break;
         }
-        coperosRooster += `${item.position}. ${icon}${item.user} (${item.score})\n`;
+        const plusChar = item.diff > 0 ? "+" : "";
+        const diffPoints = item.diff !== 0 ? ` ${plusChar}${item.diff} pts.` : "";
+        let positionChangeIcon = "";
+        if (item.positionChange > 0) {
+            positionChangeIcon = ":arrow_up:";
+        }
+        if (item.positionChange < 0) {
+            positionChangeIcon = ":arrow_down:";
+        }
+        coperosRooster += `${item.position}. ${icon}${item.user} (${item.score} pts.)${diffPoints} ${positionChangeIcon}\n`;
     }
+
     postToSlack(coperosRooster);
 }
 
@@ -50,7 +108,7 @@ function getJsonFromHtml($) {
             let data = {
                 position: i,
                 user: $(this).children('.username').children().html(),
-                score: $(this).children('.puntaje').html(),
+                score: parseInt($(this).children('.puntaje').html().replace(" pts.", "")),
             };
             result.push(data);
         }

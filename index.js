@@ -10,6 +10,7 @@ const logger = winston.createLogger({
     format: winston.format.cli(),
     transports: [
         new winston.transports.File({
+            format: winston.format.json(),
             filename: "error.log",
             level: "error"
         }),
@@ -69,6 +70,9 @@ function postToSlack(message) {
 process.on("uncaughtException", error => {
     try {
         logger.error(error);
+        if (error.stack) {
+            logger.error(error.stack);
+        }
     } catch (exception) {
         console.log("exception: " + exception);
         console.log("error: " + error);
