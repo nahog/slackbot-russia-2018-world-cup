@@ -1,4 +1,5 @@
 node_modules
 db.json
+coperos.json
 error.log
 **/**/config.json
