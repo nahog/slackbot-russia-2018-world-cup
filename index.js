@@ -14,11 +14,6 @@ const logger = winston.createLogger({
             filename: "error.log",
             level: "error"
         }),
-        new winston.transports.File({
-            format: winston.format.printf(l => `${moment().toISOString()} ${l.level} ${l.message}`),
-            filename: "index.html",
-            level: process.env.LOG_LEVEL
-        }),
         new winston.transports.Console({
             format: winston.format.cli(),
             level: process.env.LOG_LEVEL
@@ -54,15 +49,12 @@ logger.info("first event will fire at: " + job.nextInvocation());
 
 if (process.env.ENABLE_STATIC_WEB === "true") {
     logger.info("static web server enabled");
-    const path = require('path')
-    const port = process.env.PORT || 80
+    const path = require('path');
+    const port = process.env.PORT || 80;
     const express = require("express");
     const app = express();
-    app.get('/db.json', function (request, response) {
-        response.sendFile(path.resolve('db.json'))
-    })
     app.get('*', function (request, response) {
-        response.sendFile(path.resolve('index.html'))
+        response.send("Keep alive");
     });
     app.listen(port);
 }
