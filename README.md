@@ -44,6 +44,7 @@ All configurations can be modified by environmental variables, or using the conf
 - SLACK_CHANNEL, type: string, default: `"#worldcup"`, The name of the slack channel that the bot will post to.
 - SLACK_BOT, type: string, default: `"Worldcup"`, The name of the bot (configured in slack) that will make the post.
 - SLACK_WEBHOOK, type string, default: `"https://hooks.slack.com/services/***`, The slack webhook url, the default will not work, you need to get this from slack when creating the webhook.
+- ENABLE_STATIC_WEB, type boolean, default: `false`, Enable a static web server that serves logs, helpful for heroku, enabled in the heroku app by default.
 
 ### Football-data module
 - HIGHLIGHTED_TEAM - type: string, default: `"Argentina"`, A team to highligh (bold) in the posted message, it should match the team name that comes from the Api.
