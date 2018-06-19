@@ -34,7 +34,7 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 - Post the current rooster extracted from the site
 
 ## Configs
-All configurations can be modified by environmental variables, or using the config.json file. There is one general config, and one in each module, for security reasons the config.json file is ignored in git but an example config file is provided for easy ussage. Here are the different configurations available:
+All configurations can be modified by environmental variables, or using the .env file. Here are the different configurations available:
 
 ### General
 - LOG_LEVEL - type: string, default `"info"`, The log level to the console (error, info, debug, silly, etc...)
@@ -68,10 +68,7 @@ Current www.coperos.com :soccer: rooster:
 2. :second_place_medal: user2 (3 pts.)
 3. :third_place_medal: user3 (3 pts.)
 4. user4 (3 pts.)
-5. user5 (3 pts.)
-6. user6 (3 pts.)
-7. user7 (0 pts.)
-8. :sob: user8 (0 pts.)
+5. :sob: user5 (0 pts.)
 ```
 
 ## Screenshots
@@ -93,20 +90,16 @@ module.exports = function(logger, t, postToSlack) {
     // strings there if you want to support localization in your module). See the
     // node-translations pkg, or you can simple does not use t() and have a single
     // language in your module
-    let message = t("Love this {lovableItem} :robot_face:", {lovableItem: "bot"});
+    let message = t("Love this {lovableItem} :robot_face:", {lovableItem: process.env.LOVABLE_ITEM});
     // postToSlack(message) will post whaever message you pass to the configured slack
     // channel, it support all the emojis and rich text supported by slack.
     postToSlack(message);
 }
 ```
-- If you need configurations you can use constants or config files and require them to keep the same pattern as other modules
-```javascript
-require("./config.json");
-const myConfig = process.env.MY_MODULE_MY_CONFIG || config.myConfig || "default";
-```
+- If you need configurations you can use the env variables, any variable in the .env file will also be loaded
 - Run it (this will post "Love this bot :robot_face:" every half hour to slack):
 ```
-SLACK_WEBHOOK="https://hooks.slack.com/services/MYSLACKWE/BHOOKKEYTHA/tIgotFROMslackWebInterface" CRON_SCHEDULE="*/30 * * * *" node index.js my-module
+LOVABLE_ITEM=bot SLACK_WEBHOOK="https://hooks.slack.com/services/MYSLACKWE/BHOOKKEYTHA/tIgotFROMslackWebInterface" CRON_SCHEDULE="*/30 * * * *" node index.js my-module
 ```
 
 ## Todos

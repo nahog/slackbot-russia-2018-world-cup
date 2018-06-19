@@ -3,17 +3,13 @@ const cheerio = require('cheerio');
 const _ = require('lodash');
 const fs = require('fs');
 
-let config = null;
-if (fs.existsSync("./config.json")) {
-    config = require("./config.json");
-}
-
 const databaseFile = "coperos.json";
-const databaseCleanFile = "coperos.clean.json";
-const tournament = process.env.COPEROS_TOURNAMENT || config.coperosTournament || "rusia_2018_1.html";
-const scrapUrl = "https://www.coperos.com/torneos/" + tournament;
+const scrapUrl = "https://www.coperos.com/torneos/" + process.env.COPEROS_TOURNAMENT;
 
 module.exports = function(logger, t, postToSlack) {
+    logger.debug("current config: " + JSON.stringify({
+        COPEROS_TOURNAMENT: process.env.COPEROS_TOURNAMENT
+    }));
     request(scrapUrl, function (error, response, html) {
         if (!error && response.statusCode == 200) {
             let $ = cheerio.load(html);
@@ -39,7 +35,7 @@ function processDatabase(logger, newData) {
     logger.debug("ordered data:" + JSON.stringify(newData));
  
     if (!fs.existsSync(databaseFile)) {
-        fs.copyFileSync(databaseCleanFile, databaseFile);
+        fs.writeFileSync(databaseFile, []);
     }
 
     const databaseFileContent = fs.readFileSync(databaseFile);
