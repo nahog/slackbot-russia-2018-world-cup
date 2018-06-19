@@ -1,10 +1,14 @@
 const flagsEmoji = require("./flags.json")
 const schedule = require("node-schedule");
-const config = require("./config.json");
 const moment = require("moment");
 const http = require("http");
 const _ = require("lodash");
 const fs = require("fs");
+
+let config = null;
+if (fs.existsSync("./config.json")) {
+    config = require("./config.json");
+}
 
 const highlightedTeam = process.env.HIGHLIGHTED_TEAM || config.highlightedTeam || "Argentina"; // It should match the team name that comes from the Api
 const showZonesJson = process.env.SHOW_ZONES_JSON || config.showZonesJson || '{ "ART": "-3", "IST": "+1" }';

@@ -1,9 +1,13 @@
 const translations = require("translations");
 const schedule = require("node-schedule");
-const config = require("./config.json");
 const Slack = require("slack-node");
 const winston = require("winston");
 const fs = require("fs");
+
+let config = null;
+if (fs.existsSync("./config.json")) {
+    config = require("./config.json");
+}
 
 const logger = winston.createLogger({
     level: process.env.LOG_LEVEL || config.logLevel || "info",

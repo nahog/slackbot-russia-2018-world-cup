@@ -1,8 +1,12 @@
-const config = require("./config.json");
 const request = require('request');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 const fs = require('fs');
+
+let config = null;
+if (fs.existsSync("./config.json")) {
+    config = require("./config.json");
+}
 
 const databaseFile = "coperos.json";
 const databaseCleanFile = "coperos.clean.json";
