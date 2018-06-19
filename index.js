@@ -5,7 +5,7 @@ const winston = require("winston");
 const moment = require("moment");
 const fs = require("fs");
 
-let config = null;
+let config = {};
 if (fs.existsSync("./config.json")) {
     config = require("./config.json");
 }
