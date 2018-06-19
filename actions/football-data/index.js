@@ -5,34 +5,24 @@ const http = require("http");
 const _ = require("lodash");
 const fs = require("fs");
 
-let config = null;
-if (fs.existsSync("./config.json")) {
-    config = require("./config.json");
-}
-
-const highlightedTeam = process.env.HIGHLIGHTED_TEAM || config.highlightedTeam || "Argentina"; // It should match the team name that comes from the Api
-const showZonesJson = process.env.SHOW_ZONES_JSON || config.showZonesJson || '{ "ART": "-3", "IST": "+1" }';
-const showZones = JSON.parse(showZonesJson);
-const footballDataApiToken = process.env.FOOTBALL_DATA_API_TOKEN || config.footballDataApiToken || "***";
-const dbFile = "db.json";
-const dbCleanFile = "db.clean.json";
+const showZones = JSON.parse(process.env.SHOW_ZONES_JSON);
+const dbFile = "football-data.json";
 const dataApiOptions = {
     host: "api.football-data.org",
     port: 80,
     path: "/v1/competitions/467/fixtures",
     method: "GET",
     headers: {
-        "X-Auth-Token": footballDataApiToken
+        "X-Auth-Token": process.env.FOOTBALL_DATA_API_TOKEN
     }
 };
 
 module.exports = function(logger, t, postToSlack) {
-    if (!fs.existsSync(dbFile)) {
-        logger.info(
-            "db file does not exists, creating one from the clean db template"
-        );
-        fs.copyFileSync(dbCleanFile, dbFile);
-    }
+    logger.debug("current config: " + JSON.stringify({
+        HIGHLIGHTED_TEAM: process.env.HIGHLIGHTED_TEAM,
+        SHOW_ZONES_JSON: process.env.SHOW_ZONES_JSON,
+        FOOTBALL_DATA_API_TOKEN: "***" + process.env.FOOTBALL_DATA_API_TOKEN.slice(-5)
+    }));
 
     const today = getToday();
     http
@@ -50,8 +40,12 @@ module.exports = function(logger, t, postToSlack) {
             logger.debug("data from api call completed");
             logger.log("silly", "data from api call arrived, body: " + body);
 
-            let apiData = parseApiData(logger, body);
+            const bodyData = JSON.parse(body);            
+            let apiData = parseApiData(logger, bodyData);
 
+            if (!fs.existsSync(dbFile)) {
+                createInitialDb(today, logger, bodyData);
+            }
             let dbData = JSON.parse(fs.readFileSync(dbFile));
             _.forEach(apiData, apiFixture => {
                 let dbFixture = _.findLast(dbData, ["id", apiFixture.id]);
@@ -70,11 +64,34 @@ module.exports = function(logger, t, postToSlack) {
     .end();
 }
 
+function createInitialDb(today, logger, apiData) {
+    logger.info("creating db");
+    logger.debug("processing fixtures: " + apiData.fixtures.length);
+    let dbData = [];
+    _.forEach(apiData.fixtures, data => {
+        logger.debug("processing " + data.homeTeamName + data.awayTeamName + data.date);
+        let dbDataItem = {};
+        dbDataItem.id = getId(data);
+        const fixtureDate = moment(data.date);
+        dbDataItem.posted = fixtureDate.isBefore(today);
+        dbDataItem.status = data.status;
+        dbDataItem.date = data.date,
+        dbDataItem.homeTeamName = data.homeTeamName;
+        dbDataItem.awayTeamName = data.awayTeamName;
+        dbDataItem.goalsHomeTeam = data.result.goalsHomeTeam;
+        dbDataItem.goalsAwayTeam = data.result.goalsAwayTeam;
+        dbData.push(dbDataItem);
+    });
+    const dbDataAsString = JSON.stringify(dbData, null, 4);
+    logger.log("silly", dbDataAsString);
+    fs.writeFileSync(dbFile, dbDataAsString);
+}
+
 function processFixture(logger, t, postToSlack, today, apiFixture, dbFixture) {
     logger.log("silly", "processing match: " + apiFixture.id);
 
-    const homeTeamDecoration = apiFixture.homeTeamName === highlightedTeam ? "*" : "";
-    const awayTeamDecoration = apiFixture.awayTeamName === highlightedTeam ? "*" : "";
+    const homeTeamDecoration = apiFixture.homeTeamName === process.env.HIGHLIGHTED_TEAM ? "*" : "";
+    const awayTeamDecoration = apiFixture.awayTeamName === process.env.HIGHLIGHTED_TEAM ? "*" : "";
 
     const fixtureDate = moment(apiFixture.date);
 
@@ -143,9 +160,8 @@ function getMatchHour(date) {
     return hours.join(", ");
 }
 
-function parseApiData(logger, body) {
+function parseApiData(logger, bodyData) {
     let apiData = [];
-    const bodyData = JSON.parse(body);
     if (!bodyData || bodyData.error) {
         logger.error(bodyData.error);
         return apiData;

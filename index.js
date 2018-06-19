@@ -5,12 +5,8 @@ const winston = require("winston");
 const moment = require("moment");
 const fs = require("fs");
 
-let config = {};
-if (fs.existsSync("./config.json")) {
-    config = require("./config.json");
-}
+require('dotenv').config()
 
-config.logLevel = process.env.LOG_LEVEL || config.logLevel || "info";
 const logger = winston.createLogger({
     transports: [
         new winston.transports.File({
@@ -21,51 +17,53 @@ const logger = winston.createLogger({
         new winston.transports.File({
             format: winston.format.printf(l => `${moment().toISOString()} ${l.level} ${l.message}`),
             filename: "index.html",
-            level: config.logLevel
+            level: process.env.LOG_LEVEL
         }),
         new winston.transports.Console({
             format: winston.format.cli(),
-            level: config.logLevel
+            level: process.env.LOG_LEVEL
         })
     ]
 });
 logger.info("proccess started");
 
-config.language = process.env.LANGUAGE || config.language || "en"; // The "es" language is already implemented, for others you need to create a new file in the locales folder
-const locale = require("./locales/" + config.language + ".json");
+logger.debug("current config: " + JSON.stringify({
+    LOG_LEVEL: process.env.LOG_LEVEL,
+    LANGUAGE: process.env.LANGUAGE,
+    CRON_SCHEDULE: process.env.CRON_SCHEDULE,
+    SLACK_ENABLED: process.env.SLACK_ENABLED,
+    SLACK_CHANNEL: process.env.SLACK_CHANNEL,
+    SLACK_BOT: process.env.SLACK_BOT,
+    SLACK_WEBHOOK: "***" + process.env.SLACK_WEBHOOK.slice(-5),
+    ENABLE_STATIC_WEB: process.env.ENABLE_STATIC_WEB
+}));
+
+const locale = require("./locales/" + process.env.LANGUAGE + ".json");
 const t = translations(locale);
-config.cronSchedule = process.env.CRON_SCHEDULE || config.cronSchedule || "*/15 * * * *";
-config.slackEnabled = process.env.SLACK_ENABLED === "true" || config.slackEnabled || true;
-config.slackChannel = process.env.SLACK_CHANNEL || config.slackChannel || "#worldcup";
-config.slackBot = process.env.SLACK_BOT || config.slackBot || "Worldcup";
-config.slackWebhook = process.env.SLACK_WEBHOOK || config.slackWebhook || "https://hooks.slack.com/services/***";
 const slack = new Slack();
 const actionModule = process.argv[2];
 
 logger.debug(
-    "the current cron schedule for calling the " + actionModule + " action is: " + config.cronSchedule
+    "the current cron schedule for calling the " + actionModule + " action is: " + process.env.CRON_SCHEDULE
 );
 
-const slackWebhookBackup = config.slackWebhook;
-config.slackWebhook = "***";
-logger.debug("current config: " + JSON.stringify(config));
-config.slackWebhook = slackWebhookBackup;
-
-slack.setWebhook(config.slackWebhook);
+slack.setWebhook(process.env.SLACK_WEBHOOK);
 var action = require("./actions/" + actionModule + "/index.js");
-let job = schedule.scheduleJob(config.cronSchedule, runJob);
+let job = schedule.scheduleJob(process.env.CRON_SCHEDULE, runJob);
 logger.info("first event will fire at: " + job.nextInvocation());
 
-config.enableStaticWeb = process.env.ENABLE_STATIC_WEB === "true" || config.enableStaticWeb || false;
-if (config.enableStaticWeb) {
+if (process.env.ENABLE_STATIC_WEB === "true") {
     logger.info("static web server enabled");
     const path = require('path')
     const port = process.env.PORT || 80
     const express = require("express");
     const app = express();
+    app.get('/db.json', function (request, response) {
+        response.sendFile(path.resolve('db.json'))
+    })
     app.get('*', function (request, response) {
         response.sendFile(path.resolve('index.html'))
-    })
+    });
     app.listen(port);
 }
 
@@ -77,12 +75,12 @@ function runJob() {
 
 function postToSlack(message) {
     logger.info("new message to post: " + message);
-    logger.info("posting as " + config.slackBot + " in " + config.slackChannel);
-    if (config.slackEnabled) {
+    logger.info("posting as " + process.env.SLACK_BOT + " in " + process.env.SLACK_CHANNEL);
+    if (process.env.SLACK_ENABLED === "true") {
         logger.info("slack is enabled, posting");
         slack.webhook({
-            channel: config.slackChannel,
-            username: config.slackBot,
+            channel: process.env.SLACK_CHANNEL,
+            username: process.env.SLACK_BOT,
             text: message
         }, (error, response) => {
             if (error) {

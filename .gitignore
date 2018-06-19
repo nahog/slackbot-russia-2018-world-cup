@@ -1,5 +1,4 @@
 node_modules
-db.json
+*.log
+football-data.json
 coperos.json
-error.log
-**/**/config.json
