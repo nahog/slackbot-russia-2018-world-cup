@@ -2,6 +2,8 @@
 
 A bot for slack to message about matches of the 2018 FIFA World Cup and other custom actions
 
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ## Modules (NEW!)
 Now you can develop your own modules to make the bot do other things based on actions. The football-data is now a module, so starting the app must include the module. As an example there is another module that parses the web www.coperos.com for a rooster and post the rooster to the channel. To launch the new module the command is (node index.js coperos).
 For example you can run the football-data every 10 minutes and the coperos once a day at 23:00:
