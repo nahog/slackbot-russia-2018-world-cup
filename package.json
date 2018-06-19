@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node index.js football-data"
   },
+  "engines": {
+    "node": "8.11.2"
+  },
   "keywords": [
     "fifa",
     "slack",
