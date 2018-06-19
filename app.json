@@ -62,6 +62,11 @@
             "description": "The log level to the console (error, info, debug, silly)",
             "value": "info",
             "required": false
+        },
+        "ENABLE_STATIC_WEB": {
+            "description": "Enable a static web server that serves logs.",
+            "value": "true",
+            "required": false
         }
     }
 }

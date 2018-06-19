@@ -35,7 +35,7 @@ config.language = process.env.LANGUAGE || config.language || "en"; // The "es" l
 const locale = require("./locales/" + config.language + ".json");
 const t = translations(locale);
 config.cronSchedule = process.env.CRON_SCHEDULE || config.cronSchedule || "*/15 * * * *";
-config.slackEnabled = process.env.SLACK_ENABLED || config.slackEnabled || true;
+config.slackEnabled = process.env.SLACK_ENABLED === "true" || config.slackEnabled || true;
 config.slackChannel = process.env.SLACK_CHANNEL || config.slackChannel || "#worldcup";
 config.slackBot = process.env.SLACK_BOT || config.slackBot || "Worldcup";
 config.slackWebhook = process.env.SLACK_WEBHOOK || config.slackWebhook || "https://hooks.slack.com/services/***";
@@ -56,7 +56,7 @@ var action = require("./actions/" + actionModule + "/index.js");
 let job = schedule.scheduleJob(config.cronSchedule, runJob);
 logger.info("first event will fire at: " + job.nextInvocation());
 
-config.enableStaticWeb = process.env.ENABLE_STATIC_WEB || config.enableStaticWeb || false;
+config.enableStaticWeb = process.env.ENABLE_STATIC_WEB === "true" || config.enableStaticWeb || false;
 if (config.enableStaticWeb) {
     logger.info("static web server enabled");
     const path = require('path')
