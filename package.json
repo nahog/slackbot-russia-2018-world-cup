@@ -4,7 +4,7 @@
   "description": "A bot for slack to message about matches of the 2018 FIFA World Cup",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js football-data"
   },
   "keywords": [
     "fifa",
