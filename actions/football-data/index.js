@@ -40,10 +40,11 @@ module.exports = function(logger, t, postToSlack) {
             logger.debug("data from api call completed");
             logger.log("silly", "data from api call arrived, body: " + body);
 
-            let apiData = parseApiData(logger, body);
+            const bodyData = JSON.parse(body);            
+            let apiData = parseApiData(logger, bodyData);
 
             if (!fs.existsSync(dbFile)) {
-                createInitialDb(today, apiData);
+                createInitialDb(today, logger, bodyData);
             }
             let dbData = JSON.parse(fs.readFileSync(dbFile));
             _.forEach(apiData, apiFixture => {
@@ -63,9 +64,12 @@ module.exports = function(logger, t, postToSlack) {
     .end();
 }
 
-function createInitialDb(today, apiData) {
+function createInitialDb(today, logger, apiData) {
+    logger.info("creating db");
+    logger.debug("processing fixtures: " + apiData.fixtures.length);
     let dbData = [];
-    _.forEach(apiData, data => {
+    _.forEach(apiData.fixtures, data => {
+        logger.debug("processing " + data.homeTeamName + data.awayTeamName + data.date);
         let dbDataItem = {};
         dbDataItem.id = getId(data);
         const fixtureDate = moment(data.date);
@@ -78,7 +82,9 @@ function createInitialDb(today, apiData) {
         dbDataItem.goalsAwayTeam = data.result.goalsAwayTeam;
         dbData.push(dbDataItem);
     });
-    fs.writeFileSync(dbFile, dbData);
+    const dbDataAsString = JSON.stringify(dbData, null, 4);
+    logger.log("silly", dbDataAsString);
+    fs.writeFileSync(dbFile, dbDataAsString);
 }
 
 function processFixture(logger, t, postToSlack, today, apiFixture, dbFixture) {
@@ -154,9 +160,8 @@ function getMatchHour(date) {
     return hours.join(", ");
 }
 
-function parseApiData(logger, body) {
+function parseApiData(logger, bodyData) {
     let apiData = [];
-    const bodyData = JSON.parse(body);
     if (!bodyData || bodyData.error) {
         logger.error(bodyData.error);
         return apiData;

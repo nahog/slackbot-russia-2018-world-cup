@@ -35,7 +35,7 @@ function processDatabase(logger, newData) {
     logger.debug("ordered data:" + JSON.stringify(newData));
  
     if (!fs.existsSync(databaseFile)) {
-        fs.writeFileSync(databaseFile, []);
+        fs.writeFileSync(databaseFile, "[]");
     }
 
     const databaseFileContent = fs.readFileSync(databaseFile);
@@ -59,8 +59,9 @@ function processDatabase(logger, newData) {
         }
     });
 
-    logger.debug("new database data: " + JSON.stringify(newData));
-    fs.writeFileSync(databaseFile, JSON.stringify(newData));
+    const databaseAsString = JSON.stringify(newData, null, 4);
+    logger.log("silly", databaseAsString);
+    fs.writeFileSync(databaseFile, databaseAsString);
     return changed;
 }
 
