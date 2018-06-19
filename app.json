@@ -1,0 +1,59 @@
+{
+    "name": "Worldcup slackbot",
+    "description": "A bot for slack to message about matches of the 2018 FIFA World Cup",
+    "repository": "https://github.com/nahog/slackbot-russia-2018-world-cup",
+    "logo": "https://raw.githubusercontent.com/nahog/slackbot-russia-2018-world-cup/master/icon.png",
+    "keywords": [
+        "fifa",
+        "slack",
+        "slackbot",
+        "russia",
+        "node",
+        "nodejs",
+        "football-data",
+        "football",
+        "soccer"
+    ],
+    "env": {
+        "LOG_LEVEL": {
+            "description": "The log level to the console (error, info, debug, silly)",
+            "value": "info"
+        },
+        "LANGUAGE": {
+            "description": "Language for the translations (en, es)",
+            "value": "en"
+        },
+        "CRON_SCHEDULE": {
+            "description": " The cron expression to schedule each Api check. The default is every 15 minutes.",
+            "value": "*/15 * * * *"
+        },
+        "SLACK_ENABLED": {
+            "description": "Enable or disable the post to slack",
+            "value": "true"
+        },
+        "SLACK_CHANNEL": {
+            "description": "The name of the slack channel (this should match slack webhook config) that the bot will post to",
+            "value": "#worldcup"
+        },
+        "SLACK_BOT": {
+            "description": "The name of the bot (this should match slack webhook config) that will make the post",
+            "value": "Worldcup"
+        },
+        "SLACK_WEBHOOK": {
+            "description": "The slack webhook url, the default will not work, you need to get this from slack when creating the webhook",
+            "value": "https://hooks.slack.com/services/***"
+        },
+        "HIGHLIGHTED_TEAM": {
+            "description": "A team to highligh (bold) in the posted message, it should match the team name that comes from the Api",
+            "value": "Argentina"
+        },
+        "SHOW_ZONES_JSON": {
+            "description": "A key-value object that represent the available timezones where the match time will be shown, the key could be anything (preferably a timezone name), the value should be the integer offset hours of the timezone",
+            "value": "{ \"ART\": \"-3\", \"IST\": \"+1\" }"
+        },
+        "FOOTBALL_DATA_API_TOKEN": {
+            "description": "The Api token used to get the match data, the default will not work, you need to get this from the Api page",
+            "value": "***"
+        }
+    }
+}
