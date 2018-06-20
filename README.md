@@ -33,6 +33,10 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 - Scrapes the www.coperos.com/torneos/your-tourament url
 - Post the current rooster extracted from the site
 
+### Instagram maradona module
+- Scrapes the instagram account @maradona (https://www.instagram.com/maradona/) and get images for posts related to the world cup
+- Post the scrapped images to slack
+
 ## Configs
 All configurations can be modified by environmental variables, or using the .env file. Here are the different configurations available:
 
