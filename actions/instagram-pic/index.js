@@ -3,12 +3,19 @@ const cheerio = require('cheerio');
 const _ = require('lodash');
 const fs = require('fs');
 
-const databaseFile = "insta-maradona.json";
-const scrapUrl = "https://www.instagram.com/maradona/";
+const databaseFile = `insta-${process.env.INSTA_ACCOUNT}.json`;
+const scrapUrl = `https://www.instagram.com/${process.env.INSTA_ACCOUNT}/`;
 
 module.exports = function (logger, t, postToSlack) {
+    logger.debug("current config: " + JSON.stringify({
+        INSTA_ACCOUNT: process.env.INSTA_ACCOUNT,
+        INSTA_FILTER: process.env.INSTA_FILTER
+    }));
+    logger.debug("database name: " + databaseFile);
+    logger.debug("scrap url: " + scrapUrl);
+
     if (!fs.existsSync(databaseFile)) {
-        fs.writeFileSync(databaseFile, '{"last":""}');
+        fs.writeFileSync(databaseFile, '[]');
     }
     request(scrapUrl, function (error, response, html) {
         if (!error && response.statusCode == 200) {
@@ -67,7 +74,8 @@ function getWorldCupPosts(logger, $) {
         }
         const link = m[1];
         const desc = m[7];
-        if (desc.indexOf("Copa del Mundo 2018") > 0) {
+        logger.log("silly", `searching for ${process.env.INSTA_FILTER} in ${desc}`);
+        if (desc.indexOf(process.env.INSTA_FILTER) > 0) {
             logger.debug("found post: " + link);
             logger.debug(desc);
             posts.push(link);

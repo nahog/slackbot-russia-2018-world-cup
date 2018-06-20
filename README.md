@@ -6,9 +6,10 @@ A bot for slack to message about matches of the 2018 FIFA World Cup and other cu
 
 ## Modules (NEW!)
 Now you can develop your own modules to make the bot do other things based on actions. The football-data is now a module, so starting the app must include the module. As an example there is another module that parses the web www.coperos.com for a rooster and post the rooster to the channel. To launch the new module the command is (node index.js coperos).
-For example you can run the football-data every 10 minutes and the coperos once a day at 23:00:
+For example you can run the football-data every 10 minutes, the instagram every 30 minutes and the coperos once a day at 23:00:
 ```
 CRON_SCHEDULE="*/10 * * * *" node index.js football-data
+INSTA_ACCOUNT=maradona INSTA_FILTER="Copa del Mundo 2018" CRON_SCHEDULE="*/30 * * * *" node index.js instagram-pic
 CRON_SCHEDULE="0 23 * * *" node index.js coperos
 ```
 
@@ -33,8 +34,8 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 - Scrapes the www.coperos.com/torneos/your-tourament url
 - Post the current rooster extracted from the site
 
-### Instagram maradona module
-- Scrapes the instagram account @maradona (https://www.instagram.com/maradona/) and get images for posts related to the world cup
+### Instagram pic module
+- Scrapes the configured instagram (https://www.instagram.com/{INSTA_ACCOUNT}/) and get images for posts related to the specified filter {INSTA_FILTER}. By default configured to post world cup photos from the @maradona account
 - Post the scrapped images to slack
 
 ## Configs
@@ -58,6 +59,10 @@ All configurations can be modified by environmental variables, or using the .env
 ### Coperos module
 - COPEROS_TOURNAMENT, type string, default: `"rusia_2018_1.html"`, The url of the www.coperos.com tournament to get the rooster.
 
+### Instagram pic module
+- INSTA_ACCOUNT, type string, default: `"maradona"`, The instagram account (should be public) to scrape images.
+- INSTA_FILTER, type string, default: `"Copa del Mundo 2018"`, A filter string to only post images that in the description contains that string.
+
 ## Sample post
 
 ### Football-data module
@@ -74,6 +79,9 @@ Current www.coperos.com :soccer: rooster:
 4. user4 (3 pts.)
 5. :sob: user5 (0 pts.)
 ```
+
+### Instagram pic module
+Picture of an instagram post
 
 ## Screenshots
 - ![](servers.jpg?raw=true)
