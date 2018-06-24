@@ -67,20 +67,19 @@ function processDatabase(logger, newData) {
 
 function styleAndPostToSlack(logger, t, postToSlack, result) {
     let coperosRooster = t("Current www.coperos.com :soccer: rooster:") + "\n";
-    for (let index = 0; index < result.length; index++) {
-        const item = result[index];
+    _.orderBy(result, ['position']).forEach(item => {
         let icon = "";
-        switch (index) {
-            case 0:
+        switch (item.position) {
+            case 1:
                 icon = ":first_place_medal: ";
                 break;
-            case 1:
+            case 2:
                 icon = ":second_place_medal: ";
                 break;
-            case 2:
+            case 3:
                 icon = ":third_place_medal: ";
                 break;
-            case (result.length - 1):
+            case (result.length):
                 icon = ":sob: ";
                 break;
         }
@@ -94,8 +93,7 @@ function styleAndPostToSlack(logger, t, postToSlack, result) {
             positionChangeIcon = ":arrow_down:";
         }
         coperosRooster += `${item.position}. ${icon}${item.user} (${item.score} pts.)${diffPoints} ${positionChangeIcon}\n`;
-    }
-
+    });
     postToSlack(coperosRooster);
 }
 
