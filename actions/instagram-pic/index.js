@@ -23,11 +23,10 @@ module.exports = function (logger, t, postToSlack) {
             let result = getWorldCupPosts(logger, $);
 
             logger.log("silly", JSON.stringify(result));
-            if (processDatabase(logger, result)) {
+            let textToPost = "";
+            if ((textToPost = processDatabase(logger, result)) !== "") {
                 logger.info("new instagram post, posting...");
-                if (result.length > 0) {
-                    postToSlack(result[0]);
-                }
+                postToSlack(textToPost);
             } else {
                 logger.info("no new post");
             }
@@ -43,15 +42,17 @@ function processDatabase(logger, newData) {
 
     const databaseFileContent = fs.readFileSync(databaseFile);
     logger.log("silly", "database data: " + databaseFileContent);
+    logger.log("silly", "new data: " + JSON.stringify(newData));
     const database = JSON.parse(databaseFileContent);
 
-    let changed = false;
+    let textToPost = "";
     _.forEach(newData, item => {
-        const found = _.findLast(database, d => d === item);
-        logger.log("silly", item + " -> " + found);
+        logger.log("silly", "data item: " + JSON.stringify(item));
+        const found = _.findLast(database, d => d.description === item.description);
+        logger.log("silly", item.description + " -> " + item.link);
         if (found === undefined) {
-            logger.info("new post found " + item);
-            changed = true;
+            logger.info("new post found " + item.description + " | " + item.link);
+            textToPost = item.link;
             return false;
         }
     });
@@ -59,7 +60,7 @@ function processDatabase(logger, newData) {
     const databaseAsString = JSON.stringify(newData, null, 4);
     logger.log("silly", databaseAsString);
     fs.writeFileSync(databaseFile, databaseAsString);
-    return changed;
+    return textToPost;
 }
 
 function getWorldCupPosts(logger, $) {
@@ -78,7 +79,10 @@ function getWorldCupPosts(logger, $) {
             if (desc.indexOf(process.env.INSTA_FILTER) > 0) {
                 logger.debug("found post: " + link);
                 logger.debug(desc);
-                posts.push(link);
+                posts.push({
+                    description: desc,
+                    link: link
+                });
             }
         });
     }

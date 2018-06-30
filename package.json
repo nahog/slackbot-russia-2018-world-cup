@@ -1,6 +1,6 @@
 {
   "name": "slackbot-russia-2018-world-cup",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A bot for slack to message about matches of the 2018 FIFA World Cup",
   "main": "index.js",
   "scripts": {

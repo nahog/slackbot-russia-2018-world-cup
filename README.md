@@ -4,7 +4,7 @@ A bot for slack to message about matches of the 2018 FIFA World Cup and other cu
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-## Modules (NEW!)
+## Modules
 Now you can develop your own modules to make the bot do other things based on actions. The football-data is now a module, so starting the app must include the module. As an example there is another module that parses the web www.coperos.com for a rooster and post the rooster to the channel. To launch the new module the command is (node index.js coperos).
 For example you can run the football-data every 10 minutes, the instagram every 30 minutes and the coperos once a day at 23:00:
 ```
@@ -34,9 +34,15 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 - Scrapes the www.coperos.com/torneos/your-tourament url
 - Post the current rooster extracted from the site
 
-### Instagram pic module
+### Instagram pic module (upgrade from v1.0.0 to v1.1.0 includes a breaking change)
 - Scrapes the configured instagram (https://www.instagram.com/{INSTA_ACCOUNT}/) and get images for posts related to the specified filter {INSTA_FILTER}. By default configured to post world cup photos from the @maradona account
 - Post the scrapped images to slack
+- Migration from v1.0.0 to v1.1.0 (new database format)
+    - If the app was never run, there are no issues
+    - If the app was run before, delete the old database
+    - Start the process with the SLACK_ENABLED set to false to prevent multiple post to slack  `SLACK_ENABLED=false node index.js instagram-pic`
+    - (a new db with the proper structure will be created)
+    - Run the app normally to continue using it as usual
 
 ## Configs
 All configurations can be modified by environmental variables, or using the .env file. Here are the different configurations available:
