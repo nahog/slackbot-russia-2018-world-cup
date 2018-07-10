@@ -124,6 +124,3 @@ module.exports = function(logger, t, postToSlack) {
 ```
 LOVABLE_ITEM=bot SLACK_WEBHOOK="https://hooks.slack.com/services/MYSLACKWE/BHOOKKEYTHA/tIgotFROMslackWebInterface" CRON_SCHEDULE="*/30 * * * *" node index.js my-module
 ```
-
-## Todos
-- A lot, it was some quick and dirty code made the morning before the world cup start, enjoy the **World Cup**
