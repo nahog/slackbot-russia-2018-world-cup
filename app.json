@@ -15,6 +15,10 @@
         "soccer"
     ],
     "env": {
+        "MODULES": {
+            "description": "The modules to run in each cron scheduled task, i.e. football-data,coperos if you want to run two modules",
+            "value": "football-data"
+        },
         "SLACK_WEBHOOK": {
             "description": "The slack webhook url, the default will not work, you need to get this from slack when creating the webhook",
             "value": "https://hooks.slack.com/services/***"
