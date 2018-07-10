@@ -1,1 +1,1 @@
-worker: node index.js football-data
+worker: node index.js

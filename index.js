@@ -2,7 +2,7 @@ const translations = require("translations");
 const schedule = require("node-schedule");
 const Slack = require("slack-node");
 const winston = require("winston");
-const moment = require("moment");
+const path = require("path");
 const fs = require("fs");
 
 require('dotenv').config()
@@ -23,6 +23,7 @@ const logger = winston.createLogger({
 logger.info("proccess started");
 
 logger.debug("current config: " + JSON.stringify({
+    MODULES: process.env.MODULES,
     LOG_LEVEL: process.env.LOG_LEVEL,
     LANGUAGE: process.env.LANGUAGE,
     CRON_SCHEDULE: process.env.CRON_SCHEDULE,
@@ -33,17 +34,62 @@ logger.debug("current config: " + JSON.stringify({
     ENABLE_STATIC_WEB: process.env.ENABLE_STATIC_WEB
 }));
 
+if (!fs.lstatSync("./locales").isDirectory()) {
+    logger.error("no locales directory");
+    return 1;
+}
+if (!fs.existsSync("./locales/" + process.env.LANGUAGE + ".json")) {
+    logger.error("no locales .json file, expecting locale: " + process.env.LANGUAGE);
+    return 1;
+}
+if (!fs.lstatSync("./actions").isDirectory()) {
+    logger.error("no actions directory");
+    return 1;
+}
+
+const actionsDir = path.resolve(__dirname, "actions");
+const availableModules = fs.readdirSync(actionsDir).filter(f => fs.statSync(path.join(actionsDir, f)).isDirectory());
+if (availableModules.length < 1) {
+    logger.error("no modules available");
+    return 1;
+}
+
 const locale = require("./locales/" + process.env.LANGUAGE + ".json");
 const t = translations(locale);
 const slack = new Slack();
-const actionModule = process.argv[2];
+
+let actionModules = [];
+if (process.argv.length === 2) {
+    logger.info("no modules passed as arguments, getting modules from config")
+    actionModules = process.env.MODULES.split(",");
+}
+if (process.argv.length === 3) {
+    logger.info("modules passed as arguments")
+    actionModules = process.argv[2].split(",");
+}
+
+if (actionModules.length === 0 ) {
+    logger.error("wrong arguments, use: node index.js module1,module2 or set the MODULES env variable if you dont wish to pass it as arguments");
+    return 1;
+}
+
+const modulesNotAvailable = actionModules.filter(mod => {
+    return availableModules.indexOf(mod) < 0;
+});
+if (modulesNotAvailable.length !== 0) {
+    logger.error("no modules found for " + modulesNotAvailable.join(",") + " available modules are " + availableModules.join(","));
+    return 1;
+}
 
 logger.debug(
-    "the current cron schedule for calling the " + actionModule + " action is: " + process.env.CRON_SCHEDULE
+    "the current cron schedule for calling the " + actionModules.join(",") + " actions is: " + process.env.CRON_SCHEDULE
 );
 
 slack.setWebhook(process.env.SLACK_WEBHOOK);
-var action = require("./actions/" + actionModule + "/index.js");
+let actions = [];
+actionModules.forEach(actionModule => {
+    actions.push(require("./actions/" + actionModule + "/index.js"));
+});
 let job = schedule.scheduleJob(process.env.CRON_SCHEDULE, runJob);
 logger.info("first event will fire at: " + job.nextInvocation());
 
@@ -61,7 +107,9 @@ if (process.env.ENABLE_STATIC_WEB === "true") {
 
 function runJob() {
     logger.info("schedule fired on: " + new Date());
-    action(logger, t, postToSlack);
+    actions.forEach(action => {
+        action(logger, t, postToSlack);
+    });
     logger.info("next schedule event at: " + job.nextInvocation());
 }
 

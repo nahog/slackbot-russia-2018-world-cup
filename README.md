@@ -12,6 +12,10 @@ CRON_SCHEDULE="*/10 * * * *" node index.js football-data
 INSTA_ACCOUNT=maradona INSTA_FILTER="Copa del Mundo 2018" CRON_SCHEDULE="*/30 * * * *" node index.js instagram-pic
 CRON_SCHEDULE="0 23 * * *" node index.js coperos
 ```
+You can also run more than one module in the same call like this:
+```
+CRON_SCHEDULE="*/10 * * * *" INSTA_ACCOUNT=maradona INSTA_FILTER="Copa del Mundo 2018" node index.js football-data,instagram-pic
+```
 
 ## What you have to do
 - Configure the slack webhook https://api.slack.com/incoming-webhooks
@@ -48,6 +52,7 @@ CRON_SCHEDULE="0 23 * * *" node index.js coperos
 All configurations can be modified by environmental variables, or using the .env file. Here are the different configurations available:
 
 ### General
+- MODULES - type: string array, default `"football-data"`, The modules to run separated by , (if the modules are passed by argument it will override this option) 
 - LOG_LEVEL - type: string, default `"info"`, The log level to the console (error, info, debug, silly, etc...)
 - LANGUAGE - type: string, default: `"en"`, Language for the translations, the "es" language is already included, any new language should be added as a new file in the locales folder following the convention of the other files already there.
 - CRON_SCHEDULE, type: string (cron expression), default: `"*/15 * * * *"`, The cron expression to schedule each Api check, see https://es.wikipedia.org/wiki/Cron_(Unix)
